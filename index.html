@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Tahreem Birthday Surprise</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
@@ -595,11 +600,8 @@
           </div>
           <div class="actions">
             <button class="btn btn-primary" type="submit">Open the surprise ✨</button>
-
           </div>
         </form>
-
-        </p>
       </div>
     </section>
 
@@ -667,131 +669,4 @@
 
       <div class="final-wrap">
         <div class="final-hero">
-          <span class="final-badge">💞 Final birthday page</span>
-          <h3>For <span class="final-name">Tahreem</span>, with all my heart</h3>
-          <p class="final-lead">This is the last page, so I wanted it to feel like a promise — soft, elegant, and full of the love I may not always say perfectly, but always feel deeply.</p>
-          <div class="ornament">✦ ♥ ✦ ♥ ✦</div>
-        </div>
-
-        <div class="final-grid">
-          <div class="vow-card">
-            <span class="promise-title">What I want for you</span>
-            <p>
-              I want your days to stay light, your heart to stay safe, and your smile to keep winning against every bad moment.
-              I want life to be gentle with you, kind to you, and full of reasons for you to laugh.
-              And through everything, I want you to always remember that you are deeply loved.
-            </p>
-          </div>
-
-          <div class="promise-stack">
-            <div class="line-block">
-              <strong>My promise</strong>
-              I will keep choosing you in little ways, in soft words, in care, in time, and in all the moments that truly matter.
-            </div>
-            <div class="line-block">
-              <strong>My truth</strong>
-              You are one of the most beautiful parts of my life, and even ordinary days feel more special when they have you in them.
-            </div>
-            <div class="line-block">
-              <strong>My birthday wish</strong>
-              May this year bring you peace in your mind, warmth in your heart, and happiness that stays for a long time.
-            </div>
-          </div>
-        </div>
-
-        <div class="ending-line">
-          <div class="ornament">♥ ✦ ♥</div>
-          <p>Happy Birthday, my love. May every beautiful thing find its way to you.</p>
-          <div class="signature">Forever yours</div>
-          <div class="page-three-actions">
-            <button class="btn btn-primary" type="button" id="restartBtn">Read from start again ✨</button>
-            <button class="btn btn-secondary" type="button" id="page3BackBtn">Back to page 2</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="popup" id="wrongPopup">
-    <div class="popup-card">
-      <div class="heart-icon">💗</div>
-      <h4>You are not my girl</h4>
-      <p>Sorry Cutie, This is only for my girl.</p>
-      <button class="btn btn-primary" type="button" id="closePopup">Okay</button>
-    </div>
-  </div>
-
-  <script>
-    const form = document.getElementById('loveForm');
-    const input = document.getElementById('girlName');
-    const fillName = document.getElementById('fillName');
-    const page1 = document.getElementById('page1');
-    const page2 = document.getElementById('page2');
-    const page3 = document.getElementById('page3');
-    const popup = document.getElementById('wrongPopup');
-    const closePopup = document.getElementById('closePopup');
-    const backBtn = document.getElementById('backBtn');
-    const nextPageBtn = document.getElementById('nextPageBtn');
-    const restartBtn = document.getElementById('restartBtn');
-    const page3BackBtn = document.getElementById('page3BackBtn');
-
-    function normalize(value) {
-      return value.trim().toLowerCase();
-    }
-
-    function showPage(pageToShow) {
-      page1.classList.remove('active');
-      page2.classList.remove('active');
-      page3.classList.remove('active');
-      pageToShow.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const entered = normalize(input.value);
-
-      if (entered === 'tahreem') {
-        popup.classList.remove('active');
-        showPage(page2);
-      } else {
-        popup.classList.add('active');
-      }
-    });
-
-    fillName.addEventListener('click', function () {
-      input.value = 'Tahreem';
-      input.focus();
-    });
-
-    closePopup.addEventListener('click', function () {
-      popup.classList.remove('active');
-      input.focus();
-    });
-
-    popup.addEventListener('click', function (e) {
-      if (e.target === popup) popup.classList.remove('active');
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') popup.classList.remove('active');
-    });
-
-    backBtn.addEventListener('click', function () {
-      showPage(page1);
-    });
-
-    nextPageBtn.addEventListener('click', function () {
-      showPage(page3);
-    });
-
-    page3BackBtn.addEventListener('click', function () {
-      showPage(page2);
-    });
-
-    restartBtn.addEventListener('click', function () {
-      showPage(page1);
-    });
-  </script>
-</body>
-</html>
+          <span class="final-bad

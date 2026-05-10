@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tahreem Birthday Surprise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+--text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+--text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+--text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+--text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+--text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+--text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
+--space-2: 0.5rem;
+--space-4: 1rem;
+--space-6: 1.5rem;
+--space-8: 2rem;
+--space-10: 2.5rem;
+--radius-lg: 1.25rem;
+--radius-xl: 1.75rem;
+--radius-2xl: 2.2rem;
+--radius-full: 9999px;
+--font-display: 'Playfair Display', Georgia, serif;
+--font-body: 'Manrope', Arial, sans-serif;
+--shadow-lg: 0 24px 60px rgba(255, 91, 145, 0.22);
+--shadow-md: 0 12px 24px rgba(255, 91, 145, 0.14);
+--pink-1: #ffd9ea;
+--pink-2: #ffb2cf;
+--pink-3: #ff6fa1;
+--orange-1: #ffb27d;
+--gold-1: #ffe08a;
+--text-dark: #5c1731;
+--text-soft: #8d5570;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+font-family: var(--font-body);
+color: var(--text-dark);
+overflow: hidden;
+background: #120711;
+}
+
+.app {
+position: relative;
+min-height: 100vh;
+}
+
+.screen {
+position: absolute;
+inset: 0;
+min-height: 100vh;
+display: none;
+align-items: center;
+justify-content: center;
+padding: var(--space-6);
+overflow: auto;
+}
+
+.screen.active { display: flex; }
+
+.page-one {
+background:
+radial-gradient(circle at 15% 20%, rgba(255,255,255,0.9), transparent 18%),
+radial-gradient(circle at 80% 15%, rgba(255, 224, 138, 0.45), transparent 22%),
+radial-gradient(circle at 75% 70%, rgba(255, 178, 125, 0.38), transparent 24%),
+radial-gradient(circle at 25% 80%, rgba(255, 111, 161, 0.35), transparent 24%),
+linear-gradient(135deg, #ffd8e8 0%, #ffc4db 18%, #ffb6c9 38%, #ffb38a 67%, #ffe08a 100%);
+}
+
+.page-two {
+background:
+linear-gradient(180deg, rgba(69, 22, 45, 0.45), rgba(69, 22, 45, 0.45)),
+radial-gradient(circle at top, rgba(255, 217, 234, 0.12), transparent 35%),
+linear-gradient(160deg, #34111f 0%, #5b1833 35%, #7a2048 68%, #2d0c1e 100%);
+color: #fff7fb;
+}
+
+.page-three {
+background:
+radial-gradient(circle at 50% 18%, rgba(255, 215, 136, 0.16), transparent 24%),
+radial-gradient(circle at 15% 85%, rgba(255, 124, 179, 0.12), transparent 26%),
+radial-gradient(circle at 88% 76%, rgba(255, 174, 120, 0.1), transparent 24%),
+linear-gradient(145deg, #120711 0%, #2a0f25 30%, #5f1d43 63%, #160912 100%);
+color: #fff8fc;
+}
+
+.floating-hearts {
+position: absolute;
+inset: 0;
+pointer-events: none;
+overflow: hidden;
+}
+
+.heart {
+position: absolute;
+bottom: -40px;
+color: rgba(255,255,255,0.72);
+font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
+animation: floatUp linear infinite;
+}
+
+.gate-card {
+width: min(100%, 760px);
+padding: clamp(1.4rem, 2vw, 2.2rem);
+background: linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.34));
+border: 1px solid rgba(255,255,255,0.55);
+border-radius: var(--radius-xl);
+box-shadow: var(--shadow-lg);
+backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+position: relative;
+z-index: 2;
+}
+
+.badge {
+display: inline-flex;
+align-items: center;
+gap: 0.45rem;
+padding: 0.7rem 1rem;
+border-radius: var(--radius-full);
+background: rgba(255,255,255,0.72);
+color: #b03a68;
+font-size: var(--text-sm);
+font-weight: 700;
+box-shadow: var(--shadow-md);
+}
+
+h1, h2, h3 {
+font-family: var(--font-display);
+line-height: 1.02;
+margin: 1rem 0 0.8rem;
+}
+
+h1 { font-size: var(--text-3xl); max-width: 12ch; }
+h2 { font-size: clamp(2.5rem, 5vw, 4.8rem); margin: 0; }
+h3 { font-size: clamp(2.4rem, 5.3vw, 5.2rem); margin: 0; }
+
+p {
+margin: 0;
+line-height: 1.75;
+font-size: var(--text-base);
+max-width: 58ch;
+}
+
+.page-one p { color: var(--text-soft); }
+.page-two p { color: rgba(255, 238, 247, 0.84); }
+.page-three p { color: rgba(255, 241, 247, 0.88); }
+
+.name-box {
+display: grid;
+gap: 1rem;
+margin-top: 1.8rem;
+}
+
+.input-wrap {
+padding: 0.4rem;
+border-radius: calc(var(--radius-lg) + 0.2rem);
+background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,255,255,0.6));
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), var(--shadow-md);
+}
+
+input {
+width: 100%;
+border: 0;
+outline: none;
+min-height: 56px;
+border-radius: var(--radius-lg);
+padding: 1rem 1.1rem;
+font-size: var(--text-base);
+color: var(--text-dark);
+background: rgba(255,255,255,0.85);
+}
+
+.actions, .page-two-actions, .page-three-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 0.9rem;
+}
+
+.btn {
+min-height: 52px;
+border: 0;
+border-radius: var(--radius-full);
+padding: 0.95rem 1.4rem;
+font-size: var(--text-sm);
+font-weight: 800;
+cursor: pointer;
+transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+color: white;
+background: linear-gradient(135deg, #ff4d8d, #ff7a59);
+box-shadow: 0 14px 26px rgba(255, 77, 141, 0.32);
+}
+
+.btn-secondary {
+color: #a83c67;
+background: rgba(255,255,255,0.75);
+box-shadow: var(--shadow-md);
+}
+
+.page-two .btn-secondary,
+.page-three .btn-secondary {
+color: #fff0f6;
+background: rgba(255,255,255,0.14);
+border: 1px solid rgba(255,255,255,0.14);
+box-shadow: none;
+}
+
+.page-three .btn-primary {
+background: linear-gradient(135deg, #ff6ca8, #ffc163);
+color: #3a1024;
+box-shadow: 0 14px 30px rgba(255, 183, 104, 0.28);
+}
+
+.little-note {
+margin-top: 1rem;
+color: #a76781;
+font-size: var(--text-sm);
+}
+
+.popup {
+position: fixed;
+inset: 0;
+display: none;
+align-items: center;
+justify-content: center;
+padding: 1rem;
+background: rgba(90, 24, 49, 0.28);
+backdrop-filter: blur(8px);
+z-index: 100;
+}
+
+.popup.active { display: flex; }
+
+.popup-card {
+width: min(100%, 360px);
+text-align: center;
+padding: 1.4rem;
+border-radius: 1.4rem;
+background: linear-gradient(180deg, #fff7fa, #ffe3ed);
+box-shadow: 0 24px 70px rgba(87, 25, 47, 0.28);
+}
+
+.popup-card h4 {
+margin: 0.4rem 0 0.5rem;
+font-family: var(--font-display);
+font-size: var(--text-xl);
+color: #7b2246;
+}
+
+.popup-card p {
+color: #8d4f68;
+margin: 0 auto 1rem;
+max-width: 24ch;
+}
+
+.heart-icon {
+width: 74px;
+aspect-ratio: 1;
+margin: 0 auto 0.6rem;
+display: grid;
+place-items: center;
+border-radius: 50%;
+font-size: 1.8rem;
+background: radial-gradient(circle at 30% 30%, #fff, #ffd3e2 55%, #ff98b9 100%);
+}
+
+.reveal-wrap {
+width: min(100%, 1100px);
+display: grid;
+grid-template-columns: 1.05fr 0.95fr;
+gap: 1.3rem;
+align-items: stretch;
+position: relative;
+z-index: 2;
+}
+
+.poster {
+position: relative;
+overflow: hidden;
+min-height: 78vh;
+padding: clamp(1.5rem, 2vw, 2.5rem);
+border-radius: 2rem;
+background:
+radial-gradient(circle at top right, rgba(255, 208, 224, 0.18), transparent 28%),
+linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.starline {
+display: flex;
+justify-content: space-between;
+color: #ffdca8;
+font-size: 1.1rem;
+letter-spacing: 0.3rem;
+}
+
+.big-line {
+display: grid;
+gap: 1rem;
+}
+
+.moon-badge,
+.final-badge {
+display: inline-flex;
+width: fit-content;
+align-items: center;
+gap: 0.5rem;
+padding: 0.75rem 1rem;
+border-radius: var(--radius-full);
+font-weight: 700;
+backdrop-filter: blur(10px);
+}
+
+.moon-badge {
+background: rgba(255,255,255,0.1);
+color: #ffe7b4;
+}
+
+.gold-name,
+.final-name {
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+}
+
+.gold-name {
+background-image: linear-gradient(90deg, #fff2c1 0%, #ffd166 38%, #ff9fbf 100%);
+}
+
+.big-note {
+max-width: 30ch;
+font-size: var(--text-lg);
+color: rgba(255, 240, 246, 0.88);
+}
+
+.night-card {
+padding: 1.1rem;
+border-radius: 1.3rem;
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.08);
+backdrop-filter: blur(10px);
+}
+
+.night-card strong,
+.letter-title,
+.promise-title {
+display: block;
+margin-bottom: 0.4rem;
+font-size: var(--text-sm);
+letter-spacing: 0.04em;
+text-transform: uppercase;
+font-weight: 800;
+}
+
+.night-card strong,
+.letter-title { color: #ffdca8; }
+
+.side-column {
+display: grid;
+gap: 1rem;
+align-content: center;
+}
+
+.letter-box {
+padding: 1.25rem;
+border-radius: 1.5rem;
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+backdrop-filter: blur(12px);
+}
+
+.mini-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 0.9rem;
+}
+
+.mini-tile {
+padding: 1rem;
+border-radius: 1.2rem;
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.1);
+text-align: center;
+color: #ffeaf3;
+}
+
+.mini-tile span {
+display: block;
+font-size: 1.4rem;
+margin-bottom: 0.4rem;
+}
+
+.shine {
+position: absolute;
+inset: auto auto 8% 8%;
+width: 220px;
+height: 220px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255, 209, 102, 0.22), rgba(255, 209, 102, 0));
+filter: blur(8px);
+pointer-events: none;
+}
+
+.page-two-hearts .heart {
+color: rgba(255, 227, 236, 0.12);
+font-size: clamp(1rem, 1rem + 2vw, 2.4rem);
+}
+
+.final-wrap {
+width: min(100%, 1160px);
+position: relative;
+z-index: 2;
+display: grid;
+gap: 1.1rem;
+}
+
+.final-hero {
+padding: clamp(1.6rem, 3vw, 3rem);
+border-radius: var(--radius-2xl);
+background:
+radial-gradient(circle at 50% 0%, rgba(255, 209, 102, 0.14), transparent 36%),
+linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+border: 1px solid rgba(255,255,255,0.14);
+box-shadow: 0 26px 70px rgba(0,0,0,0.26);
+backdrop-filter: blur(14px);
+text-align: center;
+display: grid;
+gap: 1rem;
+justify-items: center;
+overflow: hidden;
+position: relative;
+}
+
+.final-hero::before,
+.final-hero::after {
+content: '';
+position: absolute;
+width: 260px;
+height: 260px;
+border-radius: 50%;
+filter: blur(10px);
+opacity: 0.28;
+pointer-events: none;
+}
+
+.final-hero::before {
+top: -80px;
+left: -40px;
+background: radial-gradient(circle, rgba(255, 160, 196, 0.45), transparent 60%);
+}
+
+.final-hero::after {
+right: -60px;
+bottom: -90px;
+background: radial-gradient(circle, rgba(255, 209, 102, 0.38), transparent 60%);
+}
+
+.final-badge {
+background: rgba(255,255,255,0.12);
+color: #ffe8b6;
+}
+
+.final-name {
+background-image: linear-gradient(90deg, #fff0c4 0%, #ffcf7b 26%, #ff92bc 58%, #ffe9f4 100%);
+}
+
+.final-lead {
+max-width: 42ch;
+font-size: var(--text-lg);
+color: rgba(255, 244, 248, 0.92);
+}
+
+.final-grid {
+display: grid;
+grid-template-columns: 1.05fr 0.95fr;
+gap: 1.1rem;
+}
+
+.vow-card,
+.promise-stack,
+.ending-line {
+border-radius: 1.7rem;
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+backdrop-filter: blur(14px);
+}
+
+.vow-card,
+.promise-stack {
+padding: 1.35rem;
+}
+
+.promise-stack {
+display: grid;
+gap: 0.9rem;
+}
+
+.promise-title { color: #ffd89c; }
+
+.line-block {
+padding: 1rem;
+border-radius: 1.2rem;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.08);
+}
+
+.line-block strong {
+display: block;
+margin-bottom: 0.4rem;
+color: #ffb4d1;
+font-size: var(--text-sm);
+}
+
+.ending-line {
+padding: 1.35rem;
+text-align: center;
+display: grid;
+gap: 0.8rem;
+justify-items: center;
+}
+
+.signature {
+font-family: var(--font-display);
+font-size: clamp(1.8rem, 3vw, 2.6rem);
+color: #ffd89c;
+}
+
+.ornament {
+font-size: 1.2rem;
+letter-spacing: 0.5rem;
+color: rgba(255, 216, 156, 0.88);
+}
+
+@keyframes floatUp {
+from { transform: translateY(0) scale(0.9); opacity: 0; }
+15% { opacity: 0.95; }
+to { transform: translateY(-115vh) scale(1.1); opacity: 0; }
+}
+
+@media (max-width: 920px) {
+body { overflow: auto; }
+.screen { position: relative; min-height: 100vh; }
+.screen:not(.active) { display: none; }
+.reveal-wrap,
+.final-grid { grid-template-columns: 1fr; }
+.poster { min-height: auto; }
+}
+
+@media (max-width: 640px) {
+.actions, .page-two-actions, .page-three-actions { flex-direction: column; }
+.btn { width: 100%; }
+.mini-grid { grid-template-columns: 1fr; }
+h1 { max-width: 10ch; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="screen page-one active" id="page1">
+<div class="floating-hearts" aria-hidden="true">
+<span class="heart" style="left: 8%; animation-duration: 14s; animation-delay: 0s;">❤</span>
+<span class="heart" style="left: 18%; animation-duration: 11s; animation-delay: 2s;">♥</span>
+<span class="heart" style="left: 31%; animation-duration: 15s; animation-delay: 5s;">❤</span>
+<span class="heart" style="left: 47%; animation-duration: 12s; animation-delay: 1s;">♥</span>
+<span class="heart" style="left: 58%; animation-duration: 16s; animation-delay: 3s;">❤</span>
+<span class="heart" style="left: 71%; animation-duration: 13s; animation-delay: 6s;">♥</span>
+<span class="heart" style="left: 84%; animation-duration: 17s; animation-delay: 4s;">❤</span>
+</div>
+
+<div class="gate-card">
+<span class="badge">💖 Birthday surprise gate</span>
+<h1>If you are my girl, enter your beautiful name</h1>
+<p>This little page is only for one special person. Type the right name, and the surprise opens like magic.</p>
+
+<form class="name-box" id="loveForm">
+<div class="input-wrap">
+<input id="girlName" type="text" placeholder="Enter your name here..." autocomplete="off" />
+</div>
+<div class="actions">
+<button class="btn btn-primary" type="submit">Open the surprise ✨</button>
+</div>
+</form>
+</div>
+</section>
+
+<section class="screen page-two" id="page2">
+<div class="floating-hearts page-two-hearts" aria-hidden="true">
+<span class="heart" style="left: 10%; animation-duration: 18s; animation-delay: 0s;">♥</span>
+<span class="heart" style="left: 28%; animation-duration: 16s; animation-delay: 4s;">❤</span>
+<span class="heart" style="left: 49%; animation-duration: 20s; animation-delay: 2s;">♥</span>
+<span class="heart" style="left: 69%; animation-duration: 15s; animation-delay: 5s;">❤</span>
+<span class="heart" style="left: 86%; animation-duration: 19s; animation-delay: 3s;">♥</span>
+</div>
+
+<div class="reveal-wrap">
+<div class="poster">
+<div class="shine"></div>
+<div class="starline"><span>✦ ✦ ✦</span><span>for you</span></div>
+
+<div class="big-line">
+<span class="moon-badge">🌙 A midnight birthday note</span>
+<h2>Happy Birthday <span class="gold-name">Tahreem</span></h2>
+<p class="big-note">This page is different because it is your soft little night sky — calmer, deeper, and made only for your smile.</p>
+</div>
+
+<div class="night-card">
+<strong>Tonight's wish</strong>
+<p>I hope your heart feels loved, your eyes sparkle with happiness, and your whole year becomes as beautiful as your name.</p>
+</div>
+</div>
+
+<div class="side-column">
+<div class="letter-box">
+<div class="letter-title">A note for Tahreem</div>
+<p>On the first page, the world felt bright and playful. On this page, everything becomes more dreamy and personal, like a private birthday letter written under the stars.</p>
+</div>
+
+<div class="mini-grid">
+<div class="mini-tile"><span>💗</span>Made with love</div>
+<div class="mini-tile"><span>✨</span>Only for you</div>
+<div class="mini-tile"><span>🎂</span>Your special day</div>
+<div class="mini-tile"><span>💌</span>One more surprise</div>
+</div>
+
+<div class="letter-box">
+<div class="letter-title">My birthday prayer</div>
+<p>May your life stay full of gentle peace, warm laughter, sweet surprises, and the kind of love that always makes you feel safe.</p>
+</div>
+
+<div class="page-two-actions">
+<button class="btn btn-primary" type="button" id="nextPageBtn">Open the final page 💌</button>
+<button class="btn btn-secondary" type="button" id="backBtn">Back to first page</button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="screen page-three" id="page3">
+<div class="floating-hearts page-two-hearts" aria-hidden="true">
+<span class="heart" style="left: 9%; animation-duration: 22s; animation-delay: 0s;">❤</span>
+<span class="heart" style="left: 22%; animation-duration: 17s; animation-delay: 3s;">♥</span>
+<span class="heart" style="left: 40%; animation-duration: 19s; animation-delay: 1s;">❤</span>
+<span class="heart" style="left: 58%; animation-duration: 21s; animation-delay: 5s;">♥</span>
+<span class="heart" style="left: 76%; animation-duration: 18s; animation-delay: 2s;">❤</span>
+<span class="heart" style="left: 90%; animation-duration: 23s; animation-delay: 4s;">♥</span>
+</div>
+
+<div class="final-wrap">
+<div class="final-hero">
+<span class="final-badge">💞 Final birthday page</span>
+<h3>For <span class="final-name">Tahreem</span>, with all my heart</h3>
+<p class="final-lead">This is the last page, so I wanted it to feel like a promise — soft, elegant, and full of the love I may not always say perfectly, but always feel deeply.</p>
+<div class="ornament">✦ ♥ ✦ ♥ ✦</div>
+</div>
+
+<div class="final-grid">
+<div class="vow-card">
+<span class="promise-title">What I want for you</span>
+<p>
+I want your days to stay light, your heart to stay safe, and your smile to keep winning against every bad moment.
+I want life to be gentle with you, kind to you, and full of reasons for you to laugh.
+And through everything, I want you to always remember that you are deeply loved.
+</p>
+</div>
+
+<div class="promise-stack">
+<div class="line-block">
+<strong>My promise</strong>
+I will keep choosing you in little ways, in soft words, in care, in time, and in all the moments that truly matter.
+</div>
+<div class="line-block">
+<strong>My truth</strong>
+You are one of the most beautiful parts of my life, and even ordinary days feel more special when they have you in them.
+</div>
+<div class="line-block">
+<strong>My birthday wish</strong>
+May this year bring you peace in your mind, warmth in your heart, and happiness that stays for a long time.
+</div>
+</div>
+</div>
+
+<div class="ending-line">
+<div class="ornament">♥ ✦ ♥</div>
+<p>Happy Birthday, my love. May every beautiful thing find its way to you.</p>
+<div class="signature">Forever yours</div>
+<div class="page-three-actions">
+<button class="btn btn-primary" type="button" id="restartBtn">Read from start again ✨</button>
+<button class="btn btn-secondary" type="button" id="page3BackBtn">Back to page 2</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<div class="popup" id="wrongPopup">
+<div class="popup-card">
+<div class="heart-icon">💗</div>
+<h4>You are not my girl</h4>
+<p>Sorry Cutie, This is only for my girl.</p>
+<button class="btn btn-primary" type="button" id="closePopup">Okay</button>
+</div>
+</div>
+
+<script>
+const form = document.getElementById('loveForm');
+const input = document.getElementById('girlName');
+const fillName = document.getElementById('fillName');
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+const page3 = document.getElementById('page3');
+const popup = document.getElementById('wrongPopup');
+const closePopup = document.getElementById('closePopup');
+const backBtn = document.getElementById('backBtn');
+const nextPageBtn = document.getElementById('nextPageBtn');
+const restartBtn = document.getElementById('restartBtn');
+const page3BackBtn = document.getElementById('page3BackBtn');
+
+function normalize(value) {
+return value.trim().toLowerCase();
+}
+
+function showPage(pageToShow) {
+page1.classList.remove('active');
+page2.classList.remove('active');
+page3.classList.remove('active');
+pageToShow.classList.add('active');
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+form.addEventListener('submit', function (e) {
+e.preventDefault();
+const entered = normalize(input.value);
+
+if (entered === 'tahreem') {
+popup.classList.remove('active');
+showPage(page2);
+} else {
+popup.classList.add('active');
+}
+});
+
+fillName.addEventListener('click', function () {
+input.value = 'Tahreem';
+input.focus();
+});
+
+closePopup.addEventListener('click', function () {
+popup.classList.remove('active');
+input.focus();
+});
+
+popup.addEventListener('click', function (e) {
+if (e.target === popup) popup.classList.remove('active');
+});
+
+document.addEventListener('keydown', function (e) {
+if (e.key === 'Escape') popup.classList.remove('active');
+});
+
+backBtn.addEventListener('click', function () {
+showPage(page1);
+});
+
+nextPageBtn.addEventListener('click', function () {
+showPage(page3);
+});
+
+page3BackBtn.addEventListener('click', function () {
+showPage(page2);
+});
+
+restartBtn.addEventListener('click', function () {
+showPage(page1);
+});
+</script>
+</body>
+</html>

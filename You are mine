@@ -595,7 +595,7 @@
           </div>
           <div class="actions">
             <button class="btn btn-primary" type="submit">Open the surprise ✨</button>
-            <button class="btn btn-secondary" type="button" id="fillName">Try Tahreem</button>
+            
           </div>
         </form>
 

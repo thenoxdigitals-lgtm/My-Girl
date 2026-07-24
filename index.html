@@ -8,7 +8,7 @@
 
     <meta
       name="description"
-      content="Nox AI helps you generate, edit, host, and launch websites from one dashboard with managed hosting, custom domains, and live project control."
+      content="Nox AI helps you generate, customize, host, and launch websites from one dashboard with managed hosting, custom domains, and live project control."
     >
     <link rel="canonical" href="https://thenoxdigital.com/">
 
@@ -232,14 +232,15 @@
       .intro-overlay {
         position: fixed;
         inset: 0;
-        background:
-          radial-gradient(circle at center, rgba(15, 23, 42, 0.35), rgba(2, 6, 23, 0.96) 60%),
-          #020617;
+        z-index: 9999;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
+        background:
+          radial-gradient(circle at center, rgba(8, 15, 35, 0.45), rgba(2, 6, 23, 0.98) 58%),
+          linear-gradient(180deg, #020617 0%, #030711 100%);
+        transition: opacity 0.55s ease, visibility 0.55s ease;
       }
 
       .intro-overlay.hidden {
@@ -248,127 +249,147 @@
         pointer-events: none;
       }
 
-      .intro-stage {
+      .intro-grid {
+        position: absolute;
+        inset: -10%;
+        background-image:
+          linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 78%);
+        opacity: 0.32;
+        transform: perspective(1200px) rotateX(70deg) scale(1.2);
+        transform-origin: center center;
+        animation: introGridMove 5s linear infinite;
+      }
+
+      .intro-beam {
+        position: absolute;
+        width: 460px;
+        height: 460px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(34,211,238,0.22) 0%, rgba(37,99,235,0.12) 30%, rgba(139,92,246,0.08) 48%, rgba(0,0,0,0) 72%);
+        filter: blur(20px);
+        animation: introBeamPulse 2.8s ease-in-out infinite;
+      }
+
+      .intro-orbit {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        animation: orbitSpin 7s linear infinite;
+      }
+
+      .intro-orbit::before,
+      .intro-orbit::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+      }
+
+      .intro-orbit::before {
+        width: 14px;
+        height: 14px;
+        top: -7px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #22d3ee, #2563eb);
+        box-shadow: 0 0 22px rgba(34,211,238,0.65);
+      }
+
+      .intro-orbit::after {
+        width: 10px;
+        height: 10px;
+        bottom: 24px;
+        right: 20px;
+        background: linear-gradient(135deg, #8b5cf6, #22d3ee);
+        box-shadow: 0 0 18px rgba(139,92,246,0.55);
+      }
+
+      .intro-core {
         position: relative;
-        width: 240px;
-        height: 240px;
+        width: 170px;
+        height: 170px;
+        border-radius: 34px;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+          rgba(7, 10, 22, 0.74);
+        border: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow:
+          0 30px 100px rgba(0,0,0,0.48),
+          inset 0 1px 0 rgba(255,255,255,0.06);
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-
-      .intro-ring,
-      .intro-ring-2,
-      .intro-ring-3 {
-        position: absolute;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.08);
-        box-shadow:
-          0 0 30px rgba(37, 99, 235, 0.12),
-          inset 0 0 20px rgba(255,255,255,0.02);
-      }
-
-      .intro-ring {
-        width: 220px;
-        height: 220px;
-        animation: ringPulseA 2.8s ease-in-out infinite;
-      }
-
-      .intro-ring-2 {
-        width: 170px;
-        height: 170px;
-        border-color: rgba(34,211,238,0.18);
-        animation: ringPulseB 2.2s ease-in-out infinite;
-      }
-
-      .intro-ring-3 {
-        width: 120px;
-        height: 120px;
-        border-color: rgba(139,92,246,0.20);
-        animation: ringPulseC 1.8s ease-in-out infinite;
-      }
-
-      .intro-glow-sweep {
-        position: absolute;
-        width: 250px;
-        height: 250px;
-        border-radius: 999px;
-        background: conic-gradient(
-          from 0deg,
-          rgba(37,99,235,0) 0deg,
-          rgba(37,99,235,0.0) 120deg,
-          rgba(34,211,238,0.28) 180deg,
-          rgba(139,92,246,0.0) 240deg,
-          rgba(37,99,235,0) 360deg
-        );
-        filter: blur(16px);
-        animation: sweepRotate 3.2s linear infinite;
-      }
-
-      .intro-logo-wrapper {
-        position: absolute;
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 14px;
+        transform: scale(0.82) rotate(-8deg);
         opacity: 0;
-        transform: scale(0.82);
       }
 
-      .intro-logo-img {
-        width: 78px;
-        height: 78px;
+      .intro-logo {
+        width: 84px;
+        height: 84px;
         object-fit: contain;
         filter: drop-shadow(0 0 26px rgba(34, 211, 238, 0.22));
       }
 
-      .intro-name {
-        font-size: 1.75rem;
-        font-weight: 600;
-        color: #E5E7EB;
-        letter-spacing: 0.08em;
-        opacity: 0;
-        transform: translateY(8px);
+      .intro-copy {
+        position: absolute;
+        left: 50%;
+        top: calc(50% + 150px);
+        transform: translateX(-50%);
+        text-align: center;
+        width: min(90vw, 520px);
       }
 
-      .intro-tagline {
-        font-size: 0.7rem;
-        letter-spacing: 0.34em;
+      .intro-title,
+      .intro-subtitle {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      .intro-title {
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: #f8fafc;
+      }
+
+      .intro-subtitle {
+        margin-top: 10px;
+        font-size: 0.78rem;
+        letter-spacing: 0.28em;
         text-transform: uppercase;
         color: rgba(148, 163, 184, 0.95);
-        opacity: 0;
-        transform: translateY(8px);
       }
 
-      @keyframes ringPulseA {
-        0%, 100% { transform: scale(0.96); opacity: 0.5; }
-        50% { transform: scale(1.03); opacity: 0.95; }
+      @keyframes introGridMove {
+        from { transform: perspective(1200px) rotateX(70deg) translateY(0) scale(1.2); }
+        to   { transform: perspective(1200px) rotateX(70deg) translateY(64px) scale(1.2); }
       }
 
-      @keyframes ringPulseB {
-        0%, 100% { transform: scale(0.95); opacity: 0.35; }
-        50% { transform: scale(1.06); opacity: 0.85; }
+      @keyframes introBeamPulse {
+        0%,100% { transform: scale(0.94); opacity: 0.7; }
+        50% { transform: scale(1.08); opacity: 1; }
       }
 
-      @keyframes ringPulseC {
-        0%, 100% { transform: scale(0.92); opacity: 0.25; }
-        50% { transform: scale(1.08); opacity: 0.7; }
-      }
-
-      @keyframes sweepRotate {
+      @keyframes orbitSpin {
         from { transform: rotate(0deg); }
-        to   { transform: rotate(360deg); }
+        to { transform: rotate(360deg); }
       }
 
-      @keyframes introLogoReveal {
-        from { transform: scale(0.82); opacity: 0; }
-        to   { transform: scale(1); opacity: 1; }
+      @keyframes introCoreReveal {
+        0% { opacity: 0; transform: scale(0.72) rotate(-12deg); }
+        60% { opacity: 1; transform: scale(1.04) rotate(2deg); }
+        100% { opacity: 1; transform: scale(1) rotate(0deg); }
       }
 
-      @keyframes introWordReveal {
-        from { opacity: 0; transform: translateY(8px); }
-        to   { opacity: 1; transform: translateY(0); }
+      @keyframes introTextReveal {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .metric-card {
@@ -461,43 +482,34 @@
           opacity: .35;
         }
 
-        .intro-stage {
-          width: 200px;
-          height: 200px;
+        .intro-beam {
+          width: 320px;
+          height: 320px;
         }
 
-        .intro-ring {
-          width: 180px;
-          height: 180px;
+        .intro-orbit {
+          width: 220px;
+          height: 220px;
         }
 
-        .intro-ring-2 {
-          width: 140px;
-          height: 140px;
+        .intro-core {
+          width: 138px;
+          height: 138px;
+          border-radius: 26px;
         }
 
-        .intro-ring-3 {
-          width: 100px;
-          height: 100px;
+        .intro-logo {
+          width: 68px;
+          height: 68px;
         }
 
-        .intro-glow-sweep {
-          width: 210px;
-          height: 210px;
+        .intro-copy {
+          top: calc(50% + 120px);
         }
 
-        .intro-logo-img {
-          width: 64px;
-          height: 64px;
-        }
-
-        .intro-name {
-          font-size: 1.35rem;
-        }
-
-        .intro-tagline {
-          font-size: 0.62rem;
-          letter-spacing: 0.24em;
+        .intro-subtitle {
+          font-size: 0.66rem;
+          letter-spacing: 0.22em;
         }
       }
     </style>
@@ -513,17 +525,17 @@
     </div>
 
     <div id="introOverlay" class="intro-overlay">
-      <div class="intro-stage">
-        <div class="intro-ring"></div>
-        <div class="intro-ring-2"></div>
-        <div class="intro-ring-3"></div>
-        <div class="intro-glow-sweep"></div>
+      <div class="intro-grid"></div>
+      <div class="intro-beam"></div>
+      <div class="intro-orbit"></div>
 
-        <div id="introLogoWrapper" class="intro-logo-wrapper">
-          <img src="./logo.png" alt="Nox AI logo" class="intro-logo-img">
-          <span id="introName" class="intro-name">Nox AI</span>
-          <span id="introTagline" class="intro-tagline">Build • Host • Launch</span>
-        </div>
+      <div id="introCore" class="intro-core">
+        <img src="./logo.png" alt="Nox AI logo" class="intro-logo">
+      </div>
+
+      <div class="intro-copy">
+        <div id="introTitle" class="intro-title">Nox AI</div>
+        <div id="introSubtitle" class="intro-subtitle">Generate • Customize • Launch</div>
       </div>
     </div>
 
@@ -572,7 +584,7 @@
               <div class="inline-flex items-center gap-2 px-5 py-2 pill">
                 <span class="pill-dot animate-pulse"></span>
                 <span class="text-xs md:text-sm font-medium text-gray-300">
-                  AI website platform • Generate • Host • Custom domains
+                  AI website platform • Generate • Customize • Host
                 </span>
               </div>
 
@@ -582,7 +594,7 @@
               </h1>
 
               <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto fade-in-up delay-200">
-                Generate full websites, manage projects from your dashboard, edit content and code, connect hosting, and launch on your own domain from one platform.
+                Generate full websites, customize your pages from your dashboard, manage hosting, and launch on your own domain from one platform.
               </p>
 
               <div class="flex flex-col sm:flex-row justify-center gap-4 items-center fade-in-up delay-300">
@@ -608,9 +620,9 @@
                   <div class="text-[11px] md:text-xs text-gray-500 mt-1">From prompt to hosted website</div>
                 </div>
                 <div class="metric-card rounded-3xl px-6 py-5 md:px-8 md:py-6">
-                  <div class="text-[11px] uppercase tracking-[0.25em] text-gray-500 mb-2">Projects</div>
-                  <div class="text-xl md:text-2xl font-semibold text-gray-100">All in one</div>
-                  <div class="text-[11px] md:text-xs text-gray-500 mt-1">Dashboard, editor, hosting, and domains</div>
+                  <div class="text-[11px] uppercase tracking-[0.25em] text-gray-500 mb-2">Customize</div>
+                  <div class="text-xl md:text-2xl font-semibold text-gray-100">Your way</div>
+                  <div class="text-[11px] md:text-xs text-gray-500 mt-1">Update sections, images, and content easily</div>
                 </div>
                 <div class="metric-card rounded-3xl px-6 py-5 md:px-8 md:py-6">
                   <div class="text-[11px] uppercase tracking-[0.25em] text-gray-500 mb-2">Deploy</div>
@@ -636,10 +648,10 @@
                 <div class="space-y-2">
                   <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500">Prompt</div>
                   <div class="hero-prompt-box p-4 leading-relaxed text-gray-300">
-                    “Create a modern website for my solar company with hero, services, pricing, contact, dashboard-ready project structure, and hosting setup support.”
+                    “Create a modern website for my solar company with hero, services, pricing, contact, hosting support, and a clean customizable structure.”
                   </div>
                   <button class="hero-generate-btn mt-2 px-3 py-2 flex items-center justify-between text-[11px] text-gray-200 w-full">
-                    <span>Generate project</span>
+                    <span>Generate website</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M5 12h14M12 5v14" />
@@ -648,13 +660,13 @@
                 </div>
 
                 <div class="space-y-2">
-                  <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500">Project flow</div>
+                  <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500">Workflow</div>
                   <div class="flex flex-wrap gap-1.5">
                     <button class="hero-tab-active px-3 py-1.5 text-[11px] text-gray-100">
                       Generate
                     </button>
                     <button class="hero-tab px-3 py-1.5 text-[11px]">
-                      Edit
+                      Customize
                     </button>
                     <button class="hero-tab px-3 py-1.5 text-[11px]">
                       Host
@@ -692,7 +704,7 @@
                 From idea to hosted website in four steps
               </h2>
               <p class="text-sm md:text-base text-gray-400 max-w-2xl">
-                Generate your project, update content, manage everything from the dashboard, and take it live with hosting and domain support.
+                Generate your project, customize your website, manage everything from the dashboard, and take it live with hosting and domain support.
               </p>
             </div>
 
@@ -701,28 +713,28 @@
                 <div class="text-[11px] font-medium text-cyan-300 mb-1">01</div>
                 <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Describe your site</h3>
                 <p class="text-xs md:text-sm text-gray-400">
-                  Start with one prompt and generate a complete website project structure built for editing and launch.
+                  Start with one prompt and generate a complete website structure built for fast launch.
                 </p>
               </div>
               <div class="service-card service-card-outline rounded-2xl p-5">
                 <div class="text-[11px] font-medium text-cyan-300 mb-1">02</div>
-                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Edit your project</h3>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Customize your website</h3>
                 <p class="text-xs md:text-sm text-gray-400">
-                  Update code, images, copy, and layout from your dashboard and project editor whenever you need.
+                  Update sections, images, copy, and layout from your dashboard to match your brand and business.
                 </p>
               </div>
               <div class="service-card service-card-outline rounded-2xl p-5">
                 <div class="text-[11px] font-medium text-cyan-300 mb-1">03</div>
                 <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Host and publish</h3>
                 <p class="text-xs md:text-sm text-gray-400">
-                  Push your project live with managed hosting and keep track of live sites directly from your account.
+                  Push your project live with managed hosting and keep track of your websites in one place.
                 </p>
               </div>
               <div class="service-card service-card-outline rounded-2xl p-5">
                 <div class="text-[11px] font-medium text-cyan-300 mb-1">04</div>
                 <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Launch branded</h3>
                 <p class="text-xs md:text-sm text-gray-400">
-                  Connect your custom domain and launch a branded website without dealing with complex setup steps.
+                  Connect your custom domain and launch a branded website without complicated technical setup.
                 </p>
               </div>
             </div>
@@ -739,10 +751,10 @@
                 <span>Platform features</span>
               </p>
               <h2 class="text-2xl md:text-3xl font-semibold text-gray-100 mb-3">
-                Everything to generate, manage, host, and launch
+                Everything to generate, customize, host, and launch
               </h2>
               <p class="text-sm md:text-base text-gray-400 max-w-2xl">
-                Nox AI is built around the real workflow you use now: projects, editing, hosted sites, and domain connection from one place.
+                Nox AI is built around your current workflow: projects, customization, hosted sites, and domain connection from one place.
               </p>
             </div>
 
@@ -756,7 +768,7 @@
                 </div>
                 <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Project generation</h3>
                 <p class="text-xs md:text-sm text-gray-400 mb-4">
-                  Turn one prompt into a structured website project that is ready for review, editing, and publishing.
+                  Turn one prompt into a structured website project that is ready for customization and launch.
                 </p>
                 <button class="text-[11px] text-emerald-400 font-medium">
                   Core feature
@@ -770,9 +782,9 @@
                       d="M5 12h14M12 5v14" />
                   </svg>
                 </div>
-                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Built-in editing</h3>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Website customization</h3>
                 <p class="text-xs md:text-sm text-gray-400 mb-4">
-                  Update HTML, design, text, images, and layout directly inside your workflow without bouncing between tools.
+                  Update sections, text, visuals, and layout directly inside your workflow without jumping across tools.
                 </p>
               </div>
 
@@ -827,7 +839,7 @@
                 </div>
                 <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Project dashboard</h3>
                 <p class="text-xs md:text-sm text-gray-400 mb-4">
-                  Manage generated projects, hosted sites, account details, and deployment flow from one dashboard.
+                  Manage generated projects, hosted sites, account details, and publishing flow from one dashboard.
                 </p>
               </div>
             </div>
@@ -843,7 +855,7 @@
                 Nox AI vs a traditional website workflow
               </h2>
               <p class="text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
-                Compare a slower manual process with a workflow built around project generation, editing, hosting, and launch.
+                Compare a slower manual process with a workflow built around generation, customization, hosting, and launch.
               </p>
             </div>
 
@@ -856,11 +868,11 @@
                   </span>
                 </div>
                 <ul class="space-y-2.5 text-xs md:text-sm text-gray-400">
-                  <li>• Separate tools for design, editing, hosting, and domain setup.</li>
+                  <li>• Separate tools for design, website changes, hosting, and domain setup.</li>
                   <li>• Slower handoff between build and launch.</li>
-                  <li>• Repeated back-and-forth for edits and publishing.</li>
+                  <li>• Repeated back-and-forth for updates and publishing.</li>
                   <li>• Live project status is harder to track in one place.</li>
-                  <li>• Small changes often take more time than they should.</li>
+                  <li>• Small website changes often take more time than they should.</li>
                 </ul>
               </div>
 
@@ -873,7 +885,7 @@
                 </div>
                 <ul class="space-y-2.5 text-xs md:text-sm text-gray-300">
                   <li>• Generate a website project and move toward launch in under 5 minutes.</li>
-                  <li>• Edit code, copy, structure, and images from one workflow.</li>
+                  <li>• Customize text, structure, sections, and visuals from one workflow.</li>
                   <li>• Managed hosting is part of the platform experience.</li>
                   <li>• Connect custom domains with less setup friction.</li>
                   <li>• Keep control of projects and hosted websites from one dashboard.</li>
@@ -895,10 +907,10 @@
           <div class="wide-wrapper grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <h2 class="text-2xl md:text-3xl font-semibold text-white mb-3">
-                Start with a project. Launch as a hosted site.
+                Start with a project. Customize it. Launch it live.
               </h2>
               <p class="text-sm md:text-base text-gray-400 max-w-xl">
-                Create your account and use the Nox AI dashboard to generate websites, manage edits, publish hosted projects, and connect your brand domain from one place.
+                Create your account and use the Nox AI dashboard to generate websites, customize pages, publish hosted projects, and connect your brand domain from one place.
               </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 lg:justify-end lg:items-center">
@@ -928,7 +940,7 @@
                   <span class="text-sm md:text-base font-semibold text-gray-100">Nox AI</span>
                 </div>
                 <p class="text-[12px] md:text-sm text-gray-500 max-w-md mb-4">
-                  AI website platform for generating, editing, hosting, and launching websites from one dashboard with live project control.
+                  AI website platform for generating, customizing, hosting, and launching websites from one dashboard with live project control.
                 </p>
               </div>
 
@@ -1164,19 +1176,19 @@
 
       window.addEventListener('load', () => {
         const overlay = document.getElementById('introOverlay');
-        const wrapper = document.getElementById('introLogoWrapper');
-        const nameEl  = document.getElementById('introName');
-        const taglineEl = document.getElementById('introTagline');
+        const core = document.getElementById('introCore');
+        const title = document.getElementById('introTitle');
+        const subtitle = document.getElementById('introSubtitle');
 
-        wrapper.style.animation = 'introLogoReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-
-        setTimeout(() => {
-          nameEl.style.animation = 'introWordReveal 0.45s ease forwards';
-        }, 500);
+        core.style.animation = 'introCoreReveal 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards';
 
         setTimeout(() => {
-          taglineEl.style.animation = 'introWordReveal 0.45s ease forwards';
-        }, 760);
+          title.style.animation = 'introTextReveal 0.45s ease forwards';
+        }, 620);
+
+        setTimeout(() => {
+          subtitle.style.animation = 'introTextReveal 0.45s ease forwards';
+        }, 860);
 
         setTimeout(() => {
           overlay.classList.add('hidden');
@@ -1188,7 +1200,7 @@
 
           refreshAuthUI();
           initCreativeCanvas();
-        }, 2100);
+        }, 2200);
       });
     </script>
   </body>

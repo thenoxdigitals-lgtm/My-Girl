@@ -1,788 +1,1195 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tahreem Birthday Surprise</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root {
---text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
---text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
---text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
---text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
---text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
---text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
---space-2: 0.5rem;
---space-4: 1rem;
---space-6: 1.5rem;
---space-8: 2rem;
---space-10: 2.5rem;
---radius-lg: 1.25rem;
---radius-xl: 1.75rem;
---radius-2xl: 2.2rem;
---radius-full: 9999px;
---font-display: 'Playfair Display', Georgia, serif;
---font-body: 'Manrope', Arial, sans-serif;
---shadow-lg: 0 24px 60px rgba(255, 91, 145, 0.22);
---shadow-md: 0 12px 24px rgba(255, 91, 145, 0.14);
---pink-1: #ffd9ea;
---pink-2: #ffb2cf;
---pink-3: #ff6fa1;
---orange-1: #ffb27d;
---gold-1: #ffe08a;
---text-dark: #5c1731;
---text-soft: #8d5570;
-}
-
-* { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; }
-body {
-font-family: var(--font-body);
-color: var(--text-dark);
-overflow: hidden;
-background: #120711;
-}
-
-.app {
-position: relative;
-min-height: 100vh;
-}
-
-.screen {
-position: absolute;
-inset: 0;
-min-height: 100vh;
-display: none;
-align-items: center;
-justify-content: center;
-padding: var(--space-6);
-overflow: auto;
-}
-
-.screen.active { display: flex; }
-
-.page-one {
-background:
-radial-gradient(circle at 15% 20%, rgba(255,255,255,0.9), transparent 18%),
-radial-gradient(circle at 80% 15%, rgba(255, 224, 138, 0.45), transparent 22%),
-radial-gradient(circle at 75% 70%, rgba(255, 178, 125, 0.38), transparent 24%),
-radial-gradient(circle at 25% 80%, rgba(255, 111, 161, 0.35), transparent 24%),
-linear-gradient(135deg, #ffd8e8 0%, #ffc4db 18%, #ffb6c9 38%, #ffb38a 67%, #ffe08a 100%);
-}
-
-.page-two {
-background:
-linear-gradient(180deg, rgba(69, 22, 45, 0.45), rgba(69, 22, 45, 0.45)),
-radial-gradient(circle at top, rgba(255, 217, 234, 0.12), transparent 35%),
-linear-gradient(160deg, #34111f 0%, #5b1833 35%, #7a2048 68%, #2d0c1e 100%);
-color: #fff7fb;
-}
-
-.page-three {
-background:
-radial-gradient(circle at 50% 18%, rgba(255, 215, 136, 0.16), transparent 24%),
-radial-gradient(circle at 15% 85%, rgba(255, 124, 179, 0.12), transparent 26%),
-radial-gradient(circle at 88% 76%, rgba(255, 174, 120, 0.1), transparent 24%),
-linear-gradient(145deg, #120711 0%, #2a0f25 30%, #5f1d43 63%, #160912 100%);
-color: #fff8fc;
-}
-
-.floating-hearts {
-position: absolute;
-inset: 0;
-pointer-events: none;
-overflow: hidden;
-}
-
-.heart {
-position: absolute;
-bottom: -40px;
-color: rgba(255,255,255,0.72);
-font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
-animation: floatUp linear infinite;
-}
-
-.gate-card {
-width: min(100%, 760px);
-padding: clamp(1.4rem, 2vw, 2.2rem);
-background: linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.34));
-border: 1px solid rgba(255,255,255,0.55);
-border-radius: var(--radius-xl);
-box-shadow: var(--shadow-lg);
-backdrop-filter: blur(18px);
--webkit-backdrop-filter: blur(18px);
-position: relative;
-z-index: 2;
-}
-
-.badge {
-display: inline-flex;
-align-items: center;
-gap: 0.45rem;
-padding: 0.7rem 1rem;
-border-radius: var(--radius-full);
-background: rgba(255,255,255,0.72);
-color: #b03a68;
-font-size: var(--text-sm);
-font-weight: 700;
-box-shadow: var(--shadow-md);
-}
-
-h1, h2, h3 {
-font-family: var(--font-display);
-line-height: 1.02;
-margin: 1rem 0 0.8rem;
-}
-
-h1 { font-size: var(--text-3xl); max-width: 12ch; }
-h2 { font-size: clamp(2.5rem, 5vw, 4.8rem); margin: 0; }
-h3 { font-size: clamp(2.4rem, 5.3vw, 5.2rem); margin: 0; }
-
-p {
-margin: 0;
-line-height: 1.75;
-font-size: var(--text-base);
-max-width: 58ch;
-}
-
-.page-one p { color: var(--text-soft); }
-.page-two p { color: rgba(255, 238, 247, 0.84); }
-.page-three p { color: rgba(255, 241, 247, 0.88); }
-
-.name-box {
-display: grid;
-gap: 1rem;
-margin-top: 1.8rem;
-}
-
-.input-wrap {
-padding: 0.4rem;
-border-radius: calc(var(--radius-lg) + 0.2rem);
-background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,255,255,0.6));
-box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), var(--shadow-md);
-}
-
-input {
-width: 100%;
-border: 0;
-outline: none;
-min-height: 56px;
-border-radius: var(--radius-lg);
-padding: 1rem 1.1rem;
-font-size: var(--text-base);
-color: var(--text-dark);
-background: rgba(255,255,255,0.85);
-}
-
-.actions, .page-two-actions, .page-three-actions {
-display: flex;
-flex-wrap: wrap;
-gap: 0.9rem;
-}
-
-.btn {
-min-height: 52px;
-border: 0;
-border-radius: var(--radius-full);
-padding: 0.95rem 1.4rem;
-font-size: var(--text-sm);
-font-weight: 800;
-cursor: pointer;
-transition: transform 180ms ease, box-shadow 180ms ease;
-}
-
-.btn:hover { transform: translateY(-2px); }
-
-.btn-primary {
-color: white;
-background: linear-gradient(135deg, #ff4d8d, #ff7a59);
-box-shadow: 0 14px 26px rgba(255, 77, 141, 0.32);
-}
-
-.btn-secondary {
-color: #a83c67;
-background: rgba(255,255,255,0.75);
-box-shadow: var(--shadow-md);
-}
-
-.page-two .btn-secondary,
-.page-three .btn-secondary {
-color: #fff0f6;
-background: rgba(255,255,255,0.14);
-border: 1px solid rgba(255,255,255,0.14);
-box-shadow: none;
-}
-
-.page-three .btn-primary {
-background: linear-gradient(135deg, #ff6ca8, #ffc163);
-color: #3a1024;
-box-shadow: 0 14px 30px rgba(255, 183, 104, 0.28);
-}
-
-.little-note {
-margin-top: 1rem;
-color: #a76781;
-font-size: var(--text-sm);
-}
-
-.popup {
-position: fixed;
-inset: 0;
-display: none;
-align-items: center;
-justify-content: center;
-padding: 1rem;
-background: rgba(90, 24, 49, 0.28);
-backdrop-filter: blur(8px);
-z-index: 100;
-}
-
-.popup.active { display: flex; }
-
-.popup-card {
-width: min(100%, 360px);
-text-align: center;
-padding: 1.4rem;
-border-radius: 1.4rem;
-background: linear-gradient(180deg, #fff7fa, #ffe3ed);
-box-shadow: 0 24px 70px rgba(87, 25, 47, 0.28);
-}
-
-.popup-card h4 {
-margin: 0.4rem 0 0.5rem;
-font-family: var(--font-display);
-font-size: var(--text-xl);
-color: #7b2246;
-}
-
-.popup-card p {
-color: #8d4f68;
-margin: 0 auto 1rem;
-max-width: 24ch;
-}
-
-.heart-icon {
-width: 74px;
-aspect-ratio: 1;
-margin: 0 auto 0.6rem;
-display: grid;
-place-items: center;
-border-radius: 50%;
-font-size: 1.8rem;
-background: radial-gradient(circle at 30% 30%, #fff, #ffd3e2 55%, #ff98b9 100%);
-}
-
-.reveal-wrap {
-width: min(100%, 1100px);
-display: grid;
-grid-template-columns: 1.05fr 0.95fr;
-gap: 1.3rem;
-align-items: stretch;
-position: relative;
-z-index: 2;
-}
-
-.poster {
-position: relative;
-overflow: hidden;
-min-height: 78vh;
-padding: clamp(1.5rem, 2vw, 2.5rem);
-border-radius: 2rem;
-background:
-radial-gradient(circle at top right, rgba(255, 208, 224, 0.18), transparent 28%),
-linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-border: 1px solid rgba(255,255,255,0.12);
-box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-}
-
-.starline {
-display: flex;
-justify-content: space-between;
-color: #ffdca8;
-font-size: 1.1rem;
-letter-spacing: 0.3rem;
-}
-
-.big-line {
-display: grid;
-gap: 1rem;
-}
-
-.moon-badge,
-.final-badge {
-display: inline-flex;
-width: fit-content;
-align-items: center;
-gap: 0.5rem;
-padding: 0.75rem 1rem;
-border-radius: var(--radius-full);
-font-weight: 700;
-backdrop-filter: blur(10px);
-}
-
-.moon-badge {
-background: rgba(255,255,255,0.1);
-color: #ffe7b4;
-}
-
-.gold-name,
-.final-name {
--webkit-background-clip: text;
-background-clip: text;
-color: transparent;
-}
-
-.gold-name {
-background-image: linear-gradient(90deg, #fff2c1 0%, #ffd166 38%, #ff9fbf 100%);
-}
-
-.big-note {
-max-width: 30ch;
-font-size: var(--text-lg);
-color: rgba(255, 240, 246, 0.88);
-}
-
-.night-card {
-padding: 1.1rem;
-border-radius: 1.3rem;
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.08);
-backdrop-filter: blur(10px);
-}
-
-.night-card strong,
-.letter-title,
-.promise-title {
-display: block;
-margin-bottom: 0.4rem;
-font-size: var(--text-sm);
-letter-spacing: 0.04em;
-text-transform: uppercase;
-font-weight: 800;
-}
-
-.night-card strong,
-.letter-title { color: #ffdca8; }
-
-.side-column {
-display: grid;
-gap: 1rem;
-align-content: center;
-}
-
-.letter-box {
-padding: 1.25rem;
-border-radius: 1.5rem;
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.12);
-box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-backdrop-filter: blur(12px);
-}
-
-.mini-grid {
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 0.9rem;
-}
-
-.mini-tile {
-padding: 1rem;
-border-radius: 1.2rem;
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.1);
-text-align: center;
-color: #ffeaf3;
-}
-
-.mini-tile span {
-display: block;
-font-size: 1.4rem;
-margin-bottom: 0.4rem;
-}
-
-.shine {
-position: absolute;
-inset: auto auto 8% 8%;
-width: 220px;
-height: 220px;
-border-radius: 50%;
-background: radial-gradient(circle, rgba(255, 209, 102, 0.22), rgba(255, 209, 102, 0));
-filter: blur(8px);
-pointer-events: none;
-}
-
-.page-two-hearts .heart {
-color: rgba(255, 227, 236, 0.12);
-font-size: clamp(1rem, 1rem + 2vw, 2.4rem);
-}
-
-.final-wrap {
-width: min(100%, 1160px);
-position: relative;
-z-index: 2;
-display: grid;
-gap: 1.1rem;
-}
-
-.final-hero {
-padding: clamp(1.6rem, 3vw, 3rem);
-border-radius: var(--radius-2xl);
-background:
-radial-gradient(circle at 50% 0%, rgba(255, 209, 102, 0.14), transparent 36%),
-linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
-border: 1px solid rgba(255,255,255,0.14);
-box-shadow: 0 26px 70px rgba(0,0,0,0.26);
-backdrop-filter: blur(14px);
-text-align: center;
-display: grid;
-gap: 1rem;
-justify-items: center;
-overflow: hidden;
-position: relative;
-}
-
-.final-hero::before,
-.final-hero::after {
-content: '';
-position: absolute;
-width: 260px;
-height: 260px;
-border-radius: 50%;
-filter: blur(10px);
-opacity: 0.28;
-pointer-events: none;
-}
-
-.final-hero::before {
-top: -80px;
-left: -40px;
-background: radial-gradient(circle, rgba(255, 160, 196, 0.45), transparent 60%);
-}
-
-.final-hero::after {
-right: -60px;
-bottom: -90px;
-background: radial-gradient(circle, rgba(255, 209, 102, 0.38), transparent 60%);
-}
-
-.final-badge {
-background: rgba(255,255,255,0.12);
-color: #ffe8b6;
-}
-
-.final-name {
-background-image: linear-gradient(90deg, #fff0c4 0%, #ffcf7b 26%, #ff92bc 58%, #ffe9f4 100%);
-}
-
-.final-lead {
-max-width: 42ch;
-font-size: var(--text-lg);
-color: rgba(255, 244, 248, 0.92);
-}
-
-.final-grid {
-display: grid;
-grid-template-columns: 1.05fr 0.95fr;
-gap: 1.1rem;
-}
-
-.vow-card,
-.promise-stack,
-.ending-line {
-border-radius: 1.7rem;
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.12);
-box-shadow: 0 20px 45px rgba(0,0,0,0.2);
-backdrop-filter: blur(14px);
-}
-
-.vow-card,
-.promise-stack {
-padding: 1.35rem;
-}
-
-.promise-stack {
-display: grid;
-gap: 0.9rem;
-}
-
-.promise-title { color: #ffd89c; }
-
-.line-block {
-padding: 1rem;
-border-radius: 1.2rem;
-background: rgba(255,255,255,0.05);
-border: 1px solid rgba(255,255,255,0.08);
-}
-
-.line-block strong {
-display: block;
-margin-bottom: 0.4rem;
-color: #ffb4d1;
-font-size: var(--text-sm);
-}
-
-.ending-line {
-padding: 1.35rem;
-text-align: center;
-display: grid;
-gap: 0.8rem;
-justify-items: center;
-}
-
-.signature {
-font-family: var(--font-display);
-font-size: clamp(1.8rem, 3vw, 2.6rem);
-color: #ffd89c;
-}
-
-.ornament {
-font-size: 1.2rem;
-letter-spacing: 0.5rem;
-color: rgba(255, 216, 156, 0.88);
-}
-
-@keyframes floatUp {
-from { transform: translateY(0) scale(0.9); opacity: 0; }
-15% { opacity: 0.95; }
-to { transform: translateY(-115vh) scale(1.1); opacity: 0; }
-}
-
-@media (max-width: 920px) {
-body { overflow: auto; }
-.screen { position: relative; min-height: 100vh; }
-.screen:not(.active) { display: none; }
-.reveal-wrap,
-.final-grid { grid-template-columns: 1fr; }
-.poster { min-height: auto; }
-}
-
-@media (max-width: 640px) {
-.actions, .page-two-actions, .page-three-actions { flex-direction: column; }
-.btn { width: 100%; }
-.mini-grid { grid-template-columns: 1fr; }
-h1 { max-width: 10ch; }
-}
-</style>
-</head>
-<body>
-<div class="app">
-<section class="screen page-one active" id="page1">
-<div class="floating-hearts" aria-hidden="true">
-<span class="heart" style="left: 8%; animation-duration: 14s; animation-delay: 0s;">❤</span>
-<span class="heart" style="left: 18%; animation-duration: 11s; animation-delay: 2s;">♥</span>
-<span class="heart" style="left: 31%; animation-duration: 15s; animation-delay: 5s;">❤</span>
-<span class="heart" style="left: 47%; animation-duration: 12s; animation-delay: 1s;">♥</span>
-<span class="heart" style="left: 58%; animation-duration: 16s; animation-delay: 3s;">❤</span>
-<span class="heart" style="left: 71%; animation-duration: 13s; animation-delay: 6s;">♥</span>
-<span class="heart" style="left: 84%; animation-duration: 17s; animation-delay: 4s;">❤</span>
-</div>
-
-<div class="gate-card">
-<span class="badge">💖 Birthday surprise gate</span>
-<h1>If you are my girl, enter your beautiful name</h1>
-<p>This little page is only for one special person. Type the right name, and the surprise opens like magic.</p>
-
-<form class="name-box" id="loveForm">
-<div class="input-wrap">
-<input id="girlName" type="text" placeholder="Enter your name here..." autocomplete="off" />
-</div>
-<div class="actions">
-<button class="btn btn-primary" type="submit">Open the surprise ✨</button>
-</div>
-</form>
-</div>
-</section>
-
-<section class="screen page-two" id="page2">
-<div class="floating-hearts page-two-hearts" aria-hidden="true">
-<span class="heart" style="left: 10%; animation-duration: 18s; animation-delay: 0s;">♥</span>
-<span class="heart" style="left: 28%; animation-duration: 16s; animation-delay: 4s;">❤</span>
-<span class="heart" style="left: 49%; animation-duration: 20s; animation-delay: 2s;">♥</span>
-<span class="heart" style="left: 69%; animation-duration: 15s; animation-delay: 5s;">❤</span>
-<span class="heart" style="left: 86%; animation-duration: 19s; animation-delay: 3s;">♥</span>
-</div>
-
-<div class="reveal-wrap">
-<div class="poster">
-<div class="shine"></div>
-<div class="starline"><span>✦ ✦ ✦</span><span>for you</span></div>
-
-<div class="big-line">
-<span class="moon-badge">🌙 A midnight birthday note</span>
-<h2>Happy Birthday <span class="gold-name">Tahreem</span></h2>
-<p class="big-note">This page is different because it is your soft little night sky — calmer, deeper, and made only for your smile.</p>
-</div>
-
-<div class="night-card">
-<strong>Tonight's wish</strong>
-<p>I hope your heart feels loved, your eyes sparkle with happiness, and your whole year becomes as beautiful as your name.</p>
-</div>
-</div>
-
-<div class="side-column">
-<div class="letter-box">
-<div class="letter-title">A note for Tahreem</div>
-<p>On the first page, the world felt bright and playful. On this page, everything becomes more dreamy and personal, like a private birthday letter written under the stars.</p>
-</div>
-
-<div class="mini-grid">
-<div class="mini-tile"><span>💗</span>Made with love</div>
-<div class="mini-tile"><span>✨</span>Only for you</div>
-<div class="mini-tile"><span>🎂</span>Your special day</div>
-<div class="mini-tile"><span>💌</span>One more surprise</div>
-</div>
-
-<div class="letter-box">
-<div class="letter-title">My birthday prayer</div>
-<p>May your life stay full of gentle peace, warm laughter, sweet surprises, and the kind of love that always makes you feel safe.</p>
-</div>
-
-<div class="page-two-actions">
-<button class="btn btn-primary" type="button" id="nextPageBtn">Open the final page 💌</button>
-<button class="btn btn-secondary" type="button" id="backBtn">Back to first page</button>
-</div>
-</div>
-</div>
-</section>
-
-<section class="screen page-three" id="page3">
-<div class="floating-hearts page-two-hearts" aria-hidden="true">
-<span class="heart" style="left: 9%; animation-duration: 22s; animation-delay: 0s;">❤</span>
-<span class="heart" style="left: 22%; animation-duration: 17s; animation-delay: 3s;">♥</span>
-<span class="heart" style="left: 40%; animation-duration: 19s; animation-delay: 1s;">❤</span>
-<span class="heart" style="left: 58%; animation-duration: 21s; animation-delay: 5s;">♥</span>
-<span class="heart" style="left: 76%; animation-duration: 18s; animation-delay: 2s;">❤</span>
-<span class="heart" style="left: 90%; animation-duration: 23s; animation-delay: 4s;">♥</span>
-</div>
-
-<div class="final-wrap">
-<div class="final-hero">
-<span class="final-badge">💞 Final birthday page</span>
-<h3>For <span class="final-name">Tahreem</span>, with all my heart</h3>
-<p class="final-lead">This is the last page, so I wanted it to feel like a promise — soft, elegant, and full of the love I may not always say perfectly, but always feel deeply.</p>
-<div class="ornament">✦ ♥ ✦ ♥ ✦</div>
-</div>
-
-<div class="final-grid">
-<div class="vow-card">
-<span class="promise-title">What I want for you</span>
-<p>
-I want your days to stay light, your heart to stay safe, and your smile to keep winning against every bad moment.
-I want life to be gentle with you, kind to you, and full of reasons for you to laugh.
-And through everything, I want you to always remember that you are deeply loved.
-</p>
-</div>
-
-<div class="promise-stack">
-<div class="line-block">
-<strong>My promise</strong>
-I will keep choosing you in little ways, in soft words, in care, in time, and in all the moments that truly matter.
-</div>
-<div class="line-block">
-<strong>My truth</strong>
-You are one of the most beautiful parts of my life, and even ordinary days feel more special when they have you in them.
-</div>
-<div class="line-block">
-<strong>My birthday wish</strong>
-May this year bring you peace in your mind, warmth in your heart, and happiness that stays for a long time.
-</div>
-</div>
-</div>
-
-<div class="ending-line">
-<div class="ornament">♥ ✦ ♥</div>
-<p>Happy Birthday, my love. May every beautiful thing find its way to you.</p>
-<div class="signature">Forever yours</div>
-<div class="page-three-actions">
-<button class="btn btn-primary" type="button" id="restartBtn">Read from start again ✨</button>
-<button class="btn btn-secondary" type="button" id="page3BackBtn">Back to page 2</button>
-</div>
-</div>
-</div>
-</section>
-</div>
-
-<div class="popup" id="wrongPopup">
-<div class="popup-card">
-<div class="heart-icon">💗</div>
-<h4>You are not my girl</h4>
-<p>Sorry Cutie, This is only for my girl.</p>
-<button class="btn btn-primary" type="button" id="closePopup">Okay</button>
-</div>
-</div>
-
-<script>
-const form = document.getElementById('loveForm');
-const input = document.getElementById('girlName');
-const page1 = document.getElementById('page1');
-const page2 = document.getElementById('page2');
-const page3 = document.getElementById('page3');
-const popup = document.getElementById('wrongPopup');
-const closePopup = document.getElementById('closePopup');
-const backBtn = document.getElementById('backBtn');
-const nextPageBtn = document.getElementById('nextPageBtn');
-const restartBtn = document.getElementById('restartBtn');
-const page3BackBtn = document.getElementById('page3BackBtn');
-
-function normalize(value) {
-  return value.trim().toLowerCase();
-}
-
-function showPage(pageToShow) {
-  page1.classList.remove('active');
-  page2.classList.remove('active');
-  page3.classList.remove('active');
-  pageToShow.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const entered = normalize(input.value);
-
-  if (entered === 'tahreem') {
-    popup.classList.remove('active');
-    showPage(page2);
-  } else {
-    popup.classList.add('active');
-  }
-});
-
-closePopup.addEventListener('click', function () {
-  popup.classList.remove('active');
-  input.focus();
-});
-
-popup.addEventListener('click', function (e) {
-  if (e.target === popup) popup.classList.remove('active');
-});
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') popup.classList.remove('active');
-});
-
-backBtn.addEventListener('click', function () {
-  showPage(page1);
-});
-
-nextPageBtn.addEventListener('click', function () {
-  showPage(page3);
-});
-
-page3BackBtn.addEventListener('click', function () {
-  showPage(page2);
-});
-
-restartBtn.addEventListener('click', function () {
-  showPage(page1);
-});
-</script>
-</body>
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nox AI – AI Website Platform for Hosting & Domains</title>
+
+    <meta
+      name="description"
+      content="Nox AI helps you generate, edit, host, and launch websites from one dashboard with managed hosting, custom domains, and live project control."
+    >
+    <link rel="canonical" href="https://thenoxdigital.com/">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6RP5M4N271"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6RP5M4N271');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+      * { font-family: 'Poppins', sans-serif; }
+
+      :root {
+        --bg-elevated: rgba(10, 15, 30, 0.68);
+        --bg-elevated-soft: rgba(8, 11, 24, 0.78);
+        --card-border: rgba(255,255,255,0.08);
+        --accent-blue: #2563eb;
+        --accent-cyan: #22d3ee;
+        --accent-violet: #8b5cf6;
+        --accent-green: #22c55e;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --pill-bg: rgba(15, 23, 42, 0.58);
+      }
+
+      html, body {
+        background-color: transparent;
+        color: var(--text-main);
+        box-sizing: border-box;
+        cursor: default;
+      }
+
+      body.intro-lock {
+        overflow: hidden;
+      }
+
+      body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #dbeafe 0%, #67e8f9 35%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .gradient-btn {
+        background: linear-gradient(135deg, #2563eb 0%, #06b6d4 55%, #8b5cf6 100%);
+        background-size: 180% 180%;
+        animation: buttonShift 6s ease infinite;
+        transition: transform .3s ease, box-shadow .3s ease;
+      }
+
+      .gradient-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 18px 50px rgba(37, 99, 235, 0.35);
+      }
+
+      .gradient-btn:active {
+        transform: translateY(0) scale(0.985);
+      }
+
+      .btn-soft {
+        transition: all 0.25s ease;
+      }
+
+      .btn-soft:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(56, 189, 248, 0.18);
+      }
+
+      .glass-nav {
+        background: rgba(2, 6, 23, 0.52);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+      }
+
+      .service-card {
+        transition: all 0.32s ease;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+          rgba(8, 12, 24, 0.62);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+        border-color: rgba(103, 232, 249, 0.18);
+      }
+
+      .service-card-dark {
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)), rgba(5, 8, 22, 0.78);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .service-card-outline {
+        border: 1px solid var(--card-border);
+      }
+
+      .service-icon {
+        background: rgba(37, 99, 235, 0.12);
+        transition: all .3s ease;
+      }
+
+      .service-card:hover .service-icon {
+        background: linear-gradient(135deg, #2563eb 0%, #22d3ee 100%);
+      }
+
+      .service-card:hover .service-icon svg {
+        stroke: #ffffff;
+        color: #ffffff;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .fade-in-up { opacity: 0; }
+      .fade-in-up.animate-in { animation: fadeInUp 0.9s ease forwards; }
+
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+
+      @keyframes buttonShift {
+        0%,100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      @keyframes auroraOne {
+        0%   { transform: translate3d(-10%, -8%, 0) scale(1); }
+        50%  { transform: translate3d(8%, 10%, 0) scale(1.14); }
+        100% { transform: translate3d(-10%, -8%, 0) scale(1); }
+      }
+
+      @keyframes auroraTwo {
+        0%   { transform: translate3d(6%, -6%, 0) scale(1.05); }
+        50%  { transform: translate3d(-8%, 8%, 0) scale(1.2); }
+        100% { transform: translate3d(6%, -6%, 0) scale(1.05); }
+      }
+
+      .live-bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        background: linear-gradient(180deg, #02040a 0%, #030711 45%, #040816 100%);
+      }
+
+      #creativeCanvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .bg-noise {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255,255,255,0.05) 0.8px, transparent 0.8px);
+        background-size: 20px 20px;
+        opacity: 0.04;
+        mix-blend-mode: soft-light;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .aurora {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(100px);
+        opacity: .45;
+        mix-blend-mode: screen;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .aurora.a1 {
+        width: 45vw;
+        height: 45vw;
+        left: -10vw;
+        top: -8vw;
+        background: radial-gradient(circle, rgba(37,99,235,.40) 0%, rgba(37,99,235,.05) 45%, transparent 72%);
+        animation: auroraOne 18s ease-in-out infinite;
+      }
+
+      .aurora.a2 {
+        width: 42vw;
+        height: 42vw;
+        right: -8vw;
+        top: 15vh;
+        background: radial-gradient(circle, rgba(34,211,238,.30) 0%, rgba(34,211,238,.05) 48%, transparent 72%);
+        animation: auroraTwo 22s ease-in-out infinite;
+      }
+
+      .intro-overlay {
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(circle at center, rgba(15, 23, 42, 0.35), rgba(2, 6, 23, 0.96) 60%),
+          #020617;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .intro-overlay.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .intro-stage {
+        position: relative;
+        width: 240px;
+        height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .intro-ring,
+      .intro-ring-2,
+      .intro-ring-3 {
+        position: absolute;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow:
+          0 0 30px rgba(37, 99, 235, 0.12),
+          inset 0 0 20px rgba(255,255,255,0.02);
+      }
+
+      .intro-ring {
+        width: 220px;
+        height: 220px;
+        animation: ringPulseA 2.8s ease-in-out infinite;
+      }
+
+      .intro-ring-2 {
+        width: 170px;
+        height: 170px;
+        border-color: rgba(34,211,238,0.18);
+        animation: ringPulseB 2.2s ease-in-out infinite;
+      }
+
+      .intro-ring-3 {
+        width: 120px;
+        height: 120px;
+        border-color: rgba(139,92,246,0.20);
+        animation: ringPulseC 1.8s ease-in-out infinite;
+      }
+
+      .intro-glow-sweep {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 999px;
+        background: conic-gradient(
+          from 0deg,
+          rgba(37,99,235,0) 0deg,
+          rgba(37,99,235,0.0) 120deg,
+          rgba(34,211,238,0.28) 180deg,
+          rgba(139,92,246,0.0) 240deg,
+          rgba(37,99,235,0) 360deg
+        );
+        filter: blur(16px);
+        animation: sweepRotate 3.2s linear infinite;
+      }
+
+      .intro-logo-wrapper {
+        position: absolute;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        opacity: 0;
+        transform: scale(0.82);
+      }
+
+      .intro-logo-img {
+        width: 78px;
+        height: 78px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 26px rgba(34, 211, 238, 0.22));
+      }
+
+      .intro-name {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #E5E7EB;
+        letter-spacing: 0.08em;
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      .intro-tagline {
+        font-size: 0.7rem;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+        color: rgba(148, 163, 184, 0.95);
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      @keyframes ringPulseA {
+        0%, 100% { transform: scale(0.96); opacity: 0.5; }
+        50% { transform: scale(1.03); opacity: 0.95; }
+      }
+
+      @keyframes ringPulseB {
+        0%, 100% { transform: scale(0.95); opacity: 0.35; }
+        50% { transform: scale(1.06); opacity: 0.85; }
+      }
+
+      @keyframes ringPulseC {
+        0%, 100% { transform: scale(0.92); opacity: 0.25; }
+        50% { transform: scale(1.08); opacity: 0.7; }
+      }
+
+      @keyframes sweepRotate {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+
+      @keyframes introLogoReveal {
+        from { transform: scale(0.82); opacity: 0; }
+        to   { transform: scale(1); opacity: 1; }
+      }
+
+      @keyframes introWordReveal {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .metric-card {
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+          rgba(7, 10, 22, 0.68);
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .pill {
+        background-color: var(--pill-bg);
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(10px);
+      }
+
+      .pill-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: radial-gradient(circle, #22c55e, #16a34a);
+      }
+
+      .hero-shell {
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+          rgba(5, 8, 22, 0.45);
+        border-radius: 28px;
+        border: 1px solid rgba(255,255,255,0.06);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45);
+      }
+
+      .hero-shell-header {
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .hero-tab-active {
+        background: rgba(255,255,255,0.08);
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .hero-tab {
+        border-radius: 999px;
+        border: 1px solid transparent;
+        color: #94a3b8;
+      }
+
+      .hero-tab:hover {
+        border-color: rgba(255,255,255,0.14);
+      }
+
+      .hero-prompt-box,
+      .hero-code-box {
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.05);
+        background: rgba(2, 6, 23, 0.60);
+        backdrop-filter: blur(8px);
+      }
+
+      .hero-generate-btn {
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(2, 6, 23, 0.78);
+      }
+
+      .steps-section,
+      .platform-section,
+      .comparison-section {
+        border-top: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .wide-wrapper {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-glow {
+        position: relative;
+      }
+
+      @media (max-width: 768px) {
+        .aurora {
+          filter: blur(70px);
+          opacity: .35;
+        }
+
+        .intro-stage {
+          width: 200px;
+          height: 200px;
+        }
+
+        .intro-ring {
+          width: 180px;
+          height: 180px;
+        }
+
+        .intro-ring-2 {
+          width: 140px;
+          height: 140px;
+        }
+
+        .intro-ring-3 {
+          width: 100px;
+          height: 100px;
+        }
+
+        .intro-glow-sweep {
+          width: 210px;
+          height: 210px;
+        }
+
+        .intro-logo-img {
+          width: 64px;
+          height: 64px;
+        }
+
+        .intro-name {
+          font-size: 1.35rem;
+        }
+
+        .intro-tagline {
+          font-size: 0.62rem;
+          letter-spacing: 0.24em;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="h-full text-gray-100 overflow-auto intro-lock">
+
+    <div class="live-bg" id="liveBg">
+      <div class="aurora a1"></div>
+      <div class="aurora a2"></div>
+      <canvas id="creativeCanvas"></canvas>
+      <div class="bg-noise"></div>
+    </div>
+
+    <div id="introOverlay" class="intro-overlay">
+      <div class="intro-stage">
+        <div class="intro-ring"></div>
+        <div class="intro-ring-2"></div>
+        <div class="intro-ring-3"></div>
+        <div class="intro-glow-sweep"></div>
+
+        <div id="introLogoWrapper" class="intro-logo-wrapper">
+          <img src="./logo.png" alt="Nox AI logo" class="intro-logo-img">
+          <span id="introName" class="intro-name">Nox AI</span>
+          <span id="introTagline" class="intro-tagline">Build • Host • Launch</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full h-full relative z-10">
+      <nav class="fixed top-0 left-0 right-0 z-50 glass-nav">
+        <div class="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper flex items-center justify-between h-16">
+            <a href="#home" class="flex items-center gap-3">
+              <img src="./logo.png" alt="Nox AI logo" class="h-8 w-8 rounded-full object-cover">
+              <div class="leading-tight">
+                <span class="text-sm md:text-base font-semibold text-gray-100 tracking-tight">Nox AI</span>
+              </div>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+              <a href="signup.html"
+                 id="navSignupBtn"
+                 class="gradient-btn px-4 py-2 text-xs md:text-sm font-medium text-white rounded-full shadow-sm inline-flex items-center gap-2">
+                Start free →
+              </a>
+            </div>
+
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-400" aria-label="Open menu">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-[#020617]/90 backdrop-blur-xl border-t border-white/5">
+          <div class="wide-wrapper px-4 sm:px-6 py-4 space-y-3">
+            <a href="signup.html"
+               class="gradient-btn block text-center px-6 py-2.5 text-sm font-medium text-white rounded-full mt-4">
+              Start free
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <section id="home" class="relative min-h-[92vh] flex items-center pt-28 pb-16 overflow-hidden section-glow">
+        <div class="relative w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper flex flex-col gap-10">
+            <div class="space-y-7 text-center fade-in-up">
+              <div class="inline-flex items-center gap-2 px-5 py-2 pill">
+                <span class="pill-dot animate-pulse"></span>
+                <span class="text-xs md:text-sm font-medium text-gray-300">
+                  AI website platform • Generate • Host • Custom domains
+                </span>
+              </div>
+
+              <h1 class="text-3xl md:text-5xl lg:text-[3.5rem] xl:text-[3.9rem] font-semibold text-gray-100 leading-tight fade-in-up delay-100">
+                Make your site live<br>
+                in under 5 minutes with <span class="gradient-text">Nox AI</span>.
+              </h1>
+
+              <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto fade-in-up delay-200">
+                Generate full websites, manage projects from your dashboard, edit content and code, connect hosting, and launch on your own domain from one platform.
+              </p>
+
+              <div class="flex flex-col sm:flex-row justify-center gap-4 items-center fade-in-up delay-300">
+                <a href="signup.html"
+                   class="gradient-btn px-6 md:px-8 py-3 text-sm md:text-base text-white font-medium rounded-full inline-flex items-center gap-2">
+                  Start free
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+                <span class="text-[11px] md:text-xs text-gray-500">
+                  No credit card required · Managed hosting included
+                </span>
+              </div>
+            </div>
+
+            <div class="wide-wrapper fade-in-up delay-400">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-7">
+                <div class="metric-card rounded-3xl px-6 py-5 md:px-8 md:py-6">
+                  <div class="text-[11px] uppercase tracking-[0.25em] text-gray-500 mb-2">Launch</div>
+                  <div class="text-xl md:text-2xl font-semibold text-gray-100">Under 5 min</div>
+                  <div class="text-[11px] md:text-xs text-gray-500 mt-1">From prompt to hosted website</div>
+                </div>
+                <div class="metric-card rounded-3xl px-6 py-5 md:px-8 md:py-6">
+                  <div class="text-[11px] uppercase tracking-[0.25em] text-gray-500 mb-2">Projects</div>
+                  <div class="text-xl md:text-2xl font-semibold text-gray-100">All in one</div>
+                  <div class="text-[11px] md:text-xs text-gray-500 mt-1">Dashboard, editor, hosting, and domains</div>
+                </div>
+                <div class="metric-card rounded-3xl px-6 py-5 md:px-8 md:py-6">
+                  <div class="text-[11px] uppercase tracking-[0.25em] text-gray-500 mb-2">Deploy</div>
+                  <div class="text-xl md:text-2xl font-semibold text-gray-100">Hosted live</div>
+                  <div class="text-[11px] md:text-xs text-gray-500 mt-1">Publish and manage live websites faster</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-shell mx-auto mt-6 fade-in-up delay-500 w-full relative">
+              <div class="hero-shell-header flex items-center justify-between px-5 py-3.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500/70"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/80"></span>
+                </div>
+                <div class="flex items-center gap-1 text-[10px] text-gray-500">
+                  <span>nox-ai-project-live.html</span>
+                </div>
+                <div class="w-8"></div>
+              </div>
+              <div class="px-5 py-5 grid md:grid-cols-[1.1fr,1.1fr,1.2fr] gap-5 items-start text-[11px] md:text-xs text-gray-300">
+                <div class="space-y-2">
+                  <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500">Prompt</div>
+                  <div class="hero-prompt-box p-4 leading-relaxed text-gray-300">
+                    “Create a modern website for my solar company with hero, services, pricing, contact, dashboard-ready project structure, and hosting setup support.”
+                  </div>
+                  <button class="hero-generate-btn mt-2 px-3 py-2 flex items-center justify-between text-[11px] text-gray-200 w-full">
+                    <span>Generate project</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 12h14M12 5v14" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500">Project flow</div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <button class="hero-tab-active px-3 py-1.5 text-[11px] text-gray-100">
+                      Generate
+                    </button>
+                    <button class="hero-tab px-3 py-1.5 text-[11px]">
+                      Edit
+                    </button>
+                    <button class="hero-tab px-3 py-1.5 text-[11px]">
+                      Host
+                    </button>
+                    <button class="hero-tab px-3 py-1.5 text-[11px]">
+                      Domain
+                    </button>
+                  </div>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="text-[10px] uppercase tracking-[0.2em] text-gray-500">Generated layout</div>
+                  <div class="hero-code-box p-4 font-mono text-[10px] md:text-[11px] leading-6 text-indigo-100 overflow-x-auto">
+&lt;section class="hero"&gt;...&lt;/section&gt;<br>
+&lt;section id="services"&gt;...&lt;/section&gt;<br>
+&lt;section id="pricing"&gt;...&lt;/section&gt;<br>
+&lt;section id="contact"&gt;...&lt;/section&gt;<br>
+&lt;section class="hosting"&gt;...&lt;/section&gt;<br>
+&lt;footer&gt;...&lt;/footer&gt;
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="steps-section py-16 md:py-20 bg-transparent section-glow">
+        <div class="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper">
+            <div class="mb-10">
+              <p class="text-[11px] font-semibold tracking-[0.25em] text-cyan-300 uppercase mb-2">How it works</p>
+              <h2 class="text-2xl md:text-3xl font-semibold text-gray-100 mb-3">
+                From idea to hosted website in four steps
+              </h2>
+              <p class="text-sm md:text-base text-gray-400 max-w-2xl">
+                Generate your project, update content, manage everything from the dashboard, and take it live with hosting and domain support.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-4 md:gap-6">
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="text-[11px] font-medium text-cyan-300 mb-1">01</div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Describe your site</h3>
+                <p class="text-xs md:text-sm text-gray-400">
+                  Start with one prompt and generate a complete website project structure built for editing and launch.
+                </p>
+              </div>
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="text-[11px] font-medium text-cyan-300 mb-1">02</div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Edit your project</h3>
+                <p class="text-xs md:text-sm text-gray-400">
+                  Update code, images, copy, and layout from your dashboard and project editor whenever you need.
+                </p>
+              </div>
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="text-[11px] font-medium text-cyan-300 mb-1">03</div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Host and publish</h3>
+                <p class="text-xs md:text-sm text-gray-400">
+                  Push your project live with managed hosting and keep track of live sites directly from your account.
+                </p>
+              </div>
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="text-[11px] font-medium text-cyan-300 mb-1">04</div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Launch branded</h3>
+                <p class="text-xs md:text-sm text-gray-400">
+                  Connect your custom domain and launch a branded website without dealing with complex setup steps.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="platform-section py-16 md:py-20 bg-transparent section-glow">
+        <div class="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper">
+            <div class="text-left mb-10">
+              <p class="inline-flex items-center gap-2 px-4 py-2 pill text-xs text-cyan-300 mb-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                <span>Platform features</span>
+              </p>
+              <h2 class="text-2xl md:text-3xl font-semibold text-gray-100 mb-3">
+                Everything to generate, manage, host, and launch
+              </h2>
+              <p class="text-sm md:text-base text-gray-400 max-w-2xl">
+                Nox AI is built around the real workflow you use now: projects, editing, hosted sites, and domain connection from one place.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 md:gap-6 mb-6">
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="service-icon w-9 h-9 rounded-lg flex items-center justify-center mb-4">
+                  <svg class="w-4 h-4 text-[#2563eb] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h10" />
+                  </svg>
+                </div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Project generation</h3>
+                <p class="text-xs md:text-sm text-gray-400 mb-4">
+                  Turn one prompt into a structured website project that is ready for review, editing, and publishing.
+                </p>
+                <button class="text-[11px] text-emerald-400 font-medium">
+                  Core feature
+                </button>
+              </div>
+
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="service-icon w-9 h-9 rounded-lg flex items-center justify-center mb-4">
+                  <svg class="w-4 h-4 text-[#22d3ee] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5 12h14M12 5v14" />
+                  </svg>
+                </div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Built-in editing</h3>
+                <p class="text-xs md:text-sm text-gray-400 mb-4">
+                  Update HTML, design, text, images, and layout directly inside your workflow without bouncing between tools.
+                </p>
+              </div>
+
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="service-icon w-9 h-9 rounded-lg flex items-center justify-center mb-4">
+                  <svg class="w-4 h-4 text-rose-400 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 7h18M3 12h18M3 17h18" />
+                  </svg>
+                </div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Image management</h3>
+                <p class="text-xs md:text-sm text-gray-400 mb-4">
+                  Replace and manage website images inside projects without manual file cleanup or confusing asset flow.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="service-icon w-9 h-9 rounded-lg flex items-center justify-center mb-4">
+                  <svg class="w-4 h-4 text-sky-400 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 15a4 4 0 014-4h1a5 5 0 019.9-1A3.5 3.5 0 1120 17H7a4 4 0 01-4-2z" />
+                  </svg>
+                </div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Managed hosting</h3>
+                <p class="text-xs md:text-sm text-gray-400 mb-4">
+                  Publish websites with hosting built in and keep your live project status visible inside the dashboard.
+                </p>
+              </div>
+
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="service-icon w-9 h-9 rounded-lg flex items-center justify-center mb-4">
+                  <svg class="w-4 h-4 text-emerald-400 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1118 0z" />
+                    <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"></circle>
+                  </svg>
+                </div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Custom domains</h3>
+                <p class="text-xs md:text-sm text-gray-400 mb-4">
+                  Connect your own domain and move from generated project to real branded website with much less friction.
+                </p>
+              </div>
+
+              <div class="service-card service-card-outline rounded-2xl p-5">
+                <div class="service-icon w-9 h-9 rounded-lg flex items-center justify-center mb-4">
+                  <svg class="w-4 h-4 text-indigo-300 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m2 4H7a2 2 0 01-2-2v-9a2 2 0 012-2h3l2-3h4l2 3h3a2 2 0 012 2z" />
+                  </svg>
+                </div>
+                <h3 class="text-sm md:text-base font-semibold text-gray-100 mb-2">Project dashboard</h3>
+                <p class="text-xs md:text-sm text-gray-400 mb-4">
+                  Manage generated projects, hosted sites, account details, and deployment flow from one dashboard.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="comparison-section py-16 md:py-20 bg-transparent section-glow">
+        <div class="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper">
+            <div class="text-center mb-10">
+              <h2 class="text-2xl md:text-3xl font-semibold text-gray-100 mb-3">
+                Nox AI vs a traditional website workflow
+              </h2>
+              <p class="text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
+                Compare a slower manual process with a workflow built around project generation, editing, hosting, and launch.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5 md:gap-8">
+              <div class="service-card-dark rounded-2xl p-6 md:p-8 border border-white/5">
+                <div class="flex items-center justify-between mb-5">
+                  <h3 class="text-base md:text-lg font-semibold text-gray-100">Traditional workflow</h3>
+                  <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-500">
+                    Manual build
+                  </span>
+                </div>
+                <ul class="space-y-2.5 text-xs md:text-sm text-gray-400">
+                  <li>• Separate tools for design, editing, hosting, and domain setup.</li>
+                  <li>• Slower handoff between build and launch.</li>
+                  <li>• Repeated back-and-forth for edits and publishing.</li>
+                  <li>• Live project status is harder to track in one place.</li>
+                  <li>• Small changes often take more time than they should.</li>
+                </ul>
+              </div>
+
+              <div class="rounded-2xl p-6 md:p-8 border border-cyan-400/20 bg-gradient-to-b from-cyan-400/10 to-transparent backdrop-blur-xl">
+                <div class="flex items-center justify-between mb-5">
+                  <h3 class="text-base md:text-lg font-semibold text-gray-100">Nox AI</h3>
+                  <span class="text-[10px] font-semibold tracking-[0.2em] uppercase text-emerald-400">
+                    Recommended
+                  </span>
+                </div>
+                <ul class="space-y-2.5 text-xs md:text-sm text-gray-300">
+                  <li>• Generate a website project and move toward launch in under 5 minutes.</li>
+                  <li>• Edit code, copy, structure, and images from one workflow.</li>
+                  <li>• Managed hosting is part of the platform experience.</li>
+                  <li>• Connect custom domains with less setup friction.</li>
+                  <li>• Keep control of projects and hosted websites from one dashboard.</li>
+                </ul>
+                <div class="mt-6">
+                  <a href="signup.html"
+                     class="btn-soft inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-600/50 bg-[#020617]/70 text-[11px] md:text-xs font-medium text-gray-100">
+                    Start now
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-16 md:py-20 bg-gradient-to-r from-[#071120]/65 to-[#020617]/60 border-t border-white/5 backdrop-blur-xl">
+        <div class="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-semibold text-white mb-3">
+                Start with a project. Launch as a hosted site.
+              </h2>
+              <p class="text-sm md:text-base text-gray-400 max-w-xl">
+                Create your account and use the Nox AI dashboard to generate websites, manage edits, publish hosted projects, and connect your brand domain from one place.
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 lg:justify-end lg:items-center">
+              <a href="signup.html"
+                 class="gradient-btn text-white px-6 md:px-8 py-3 rounded-full font-medium inline-flex items-center gap-2 btn-soft text-sm md:text-base">
+                Start free
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <span class="text-[11px] md:text-xs text-gray-500">
+                Managed hosting · Custom domains · Project dashboard
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="bg-[#020617]/70 text-gray-400 py-10 md:py-14 border-t border-white/5 backdrop-blur-xl">
+        <div class="w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+          <div class="wide-wrapper">
+            <div class="grid md:grid-cols-3 gap-10 mb-10">
+              <div class="md:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                  <img src="./logo.png" alt="Nox AI logo" class="h-8 w-8 rounded-full object-cover">
+                  <span class="text-sm md:text-base font-semibold text-gray-100">Nox AI</span>
+                </div>
+                <p class="text-[12px] md:text-sm text-gray-500 max-w-md mb-4">
+                  AI website platform for generating, editing, hosting, and launching websites from one dashboard with live project control.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-xs md:text-sm text-gray-200 mb-4">Contact</h4>
+                <ul class="space-y-2 text-[12px] md:text-sm text-gray-400">
+                  <li>support@thenoxdigital.com</li>
+                  <li>thenoxdigital.com</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-5">
+              <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="text-[11px] md:text-xs text-gray-500">© 2026 Nox AI. All rights reserved.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2.48.0/dist/umd/supabase.js"></script>
+    <script>
+      const SUPABASE_URL = "https://ooyouwalbpvqdjvvtsjj.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_T_dsAws2gsGobdqYW8FlNw_HtCveQu4";
+
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      async function refreshAuthUI() {
+        try {
+          const { data } = await supabaseClient.auth.getUser();
+          const user = data.user;
+
+          const navSignupBtn = document.getElementById('navSignupBtn');
+
+          if (user) {
+            if (navSignupBtn) {
+              navSignupBtn.href = "dashboard.html";
+              navSignupBtn.innerHTML = `
+                Dashboard
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              `;
+            }
+          } else {
+            if (navSignupBtn) {
+              navSignupBtn.href = "signup.html";
+              navSignupBtn.innerHTML = `Start free`;
+            }
+          }
+        } catch (e) {
+          console.error("Error checking auth state", e);
+        }
+      }
+
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      const nav = document.querySelector('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          nav.classList.add('shadow-[0_10px_40px_rgba(0,0,0,0.35)]');
+        } else {
+          nav.classList.remove('shadow-[0_10px_40px_rgba(0,0,0,0.35)]');
+        }
+      });
+
+      function initCreativeCanvas() {
+        const canvas = document.getElementById('creativeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        let particles = [];
+        const particleCount = window.innerWidth < 768 ? 40 : 80;
+        const connectionDistance = 140;
+
+        let mouse = { x: width / 2, y: height / 2, active: false };
+        let smoothedMouse = { x: width / 2, y: height / 2 };
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+          mouse.active = true;
+        });
+
+        window.addEventListener('mouseout', () => {
+          mouse.active = false;
+        });
+
+        class Particle {
+          constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.baseRadius = Math.random() * 1.5 + 0.5;
+            this.radius = this.baseRadius;
+            this.color = Math.random() > 0.5 ? 'rgba(34, 211, 238, 0.8)' : 'rgba(139, 92, 246, 0.8)';
+          }
+
+          update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+
+            if (mouse.active) {
+              const dx = smoothedMouse.x - this.x;
+              const dy = smoothedMouse.y - this.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+
+              if (distance < 180) {
+                this.radius = this.baseRadius + (180 - distance) * 0.015;
+                this.x += dx * 0.005;
+                this.y += dy * 0.005;
+              } else {
+                this.radius = this.baseRadius;
+              }
+            } else {
+              this.radius = this.baseRadius;
+            }
+          }
+
+          draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = this.color;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(new Particle());
+        }
+
+        function drawConnections() {
+          for (let a = 0; a < particles.length; a++) {
+            for (let b = a; b < particles.length; b++) {
+              let dx = particles[a].x - particles[b].x;
+              let dy = particles[a].y - particles[b].y;
+              let distance = Math.sqrt(dx * dx + dy * dy);
+
+              if (distance < connectionDistance) {
+                let opacity = 1 - (distance / connectionDistance);
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(103, 232, 249, ${opacity * 0.15})`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(particles[a].x, particles[a].y);
+                ctx.lineTo(particles[b].x, particles[b].y);
+                ctx.stroke();
+              }
+            }
+          }
+        }
+
+        function drawCursorGlowAndWeb() {
+          if(!mouse.active) return;
+
+          for (let i = 0; i < particles.length; i++) {
+            let dx = smoothedMouse.x - particles[i].x;
+            let dy = smoothedMouse.y - particles[i].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if(distance < 200) {
+              let opacity = 1 - (distance / 200);
+              ctx.beginPath();
+              let gradient = ctx.createLinearGradient(smoothedMouse.x, smoothedMouse.y, particles[i].x, particles[i].y);
+              gradient.addColorStop(0, `rgba(59, 130, 246, ${opacity * 0.5})`);
+              gradient.addColorStop(1, `rgba(34, 211, 238, ${opacity * 0.1})`);
+
+              ctx.strokeStyle = gradient;
+              ctx.lineWidth = 1.5;
+              ctx.moveTo(smoothedMouse.x, smoothedMouse.y);
+              ctx.lineTo(particles[i].x, particles[i].y);
+              ctx.stroke();
+            }
+          }
+
+          const gradientOrb = ctx.createRadialGradient(
+            smoothedMouse.x, smoothedMouse.y, 0,
+            smoothedMouse.x, smoothedMouse.y, 350
+          );
+          gradientOrb.addColorStop(0, 'rgba(59, 130, 246, 0.15)');
+          gradientOrb.addColorStop(0.3, 'rgba(139, 92, 246, 0.08)');
+          gradientOrb.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.fillStyle = gradientOrb;
+          ctx.beginPath();
+          ctx.arc(smoothedMouse.x, smoothedMouse.y, 350, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+
+          smoothedMouse.x += (mouse.x - smoothedMouse.x) * 0.08;
+          smoothedMouse.y += (mouse.y - smoothedMouse.y) * 0.08;
+
+          for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+          }
+
+          drawConnections();
+          drawCursorGlowAndWeb();
+
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      }
+
+      window.addEventListener('load', () => {
+        const overlay = document.getElementById('introOverlay');
+        const wrapper = document.getElementById('introLogoWrapper');
+        const nameEl  = document.getElementById('introName');
+        const taglineEl = document.getElementById('introTagline');
+
+        wrapper.style.animation = 'introLogoReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+
+        setTimeout(() => {
+          nameEl.style.animation = 'introWordReveal 0.45s ease forwards';
+        }, 500);
+
+        setTimeout(() => {
+          taglineEl.style.animation = 'introWordReveal 0.45s ease forwards';
+        }, 760);
+
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          document.body.classList.remove('intro-lock');
+
+          document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.classList.add('animate-in');
+          });
+
+          refreshAuthUI();
+          initCreativeCanvas();
+        }, 2100);
+      });
+    </script>
+  </body>
 </html>
